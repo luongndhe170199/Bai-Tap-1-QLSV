@@ -12,3 +12,4 @@ C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\refint\BaiTap1_L0_.N
 C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\BaiTap1_L0_.Net.pdb
 C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\BaiTap1_L0_.Net.genruntimeconfig.cache
 C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\ref\BaiTap1_L0_.Net.dll
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\BaiTap1_L0_.Net.sourcelink.json
