@@ -1,0 +1,14 @@
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\bin\Debug\net8.0\BaiTap1_L0_.Net.exe
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\bin\Debug\net8.0\BaiTap1_L0_.Net.deps.json
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\bin\Debug\net8.0\BaiTap1_L0_.Net.runtimeconfig.json
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\bin\Debug\net8.0\BaiTap1_L0_.Net.dll
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\bin\Debug\net8.0\BaiTap1_L0_.Net.pdb
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\BaiTap1_L0_.Net.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\BaiTap1_L0_.Net.AssemblyInfoInputs.cache
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\BaiTap1_L0_.Net.AssemblyInfo.cs
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\BaiTap1_L0_.Net.csproj.CoreCompileInputs.cache
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\BaiTap1_L0_.Net.dll
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\refint\BaiTap1_L0_.Net.dll
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\BaiTap1_L0_.Net.pdb
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\BaiTap1_L0_.Net.genruntimeconfig.cache
+C:\Users\Duc Luong\Desktop\BaiTap1_L0_.Net\obj\Debug\net8.0\ref\BaiTap1_L0_.Net.dll
