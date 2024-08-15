@@ -4,25 +4,58 @@ class Program
 {
     static void Main()
     {
+
+        // new Student("Alice", new DateTime(2001, 1, 1), "Address1", 160, 50, "S001111111", "University A", 2019, 8.5f);
+        // new Student("Bob", new DateTime(2000, 2, 2), "Address2", 170, 60, "S002111111", "University B", 2018, 6.0f);
+        // new Student("Charlie", new DateTime(1999, 3, 3), "Address3", 165, 55, "S003111111", "University C", 2017, 4.0f);
+        // new Student("Charlieee", new DateTime(1998, 3, 3), "Address4", 166, 55, "S003111112", "University C", 2017, 4.0f);
+
+        List<Student> students = new List<Student>();
         while (true)
         {
             Console.WriteLine("\nChoose an option:");
             Console.WriteLine("1. Add a new student");
             Console.WriteLine("2. Search for a student by ID");
-            Console.WriteLine("3. Exit");
+            Console.WriteLine("3. Update student details by ID");
+            Console.WriteLine("4. Delete student by ID");
+            Console.WriteLine("5. percent of academic performance");
+            Console.WriteLine("6. Display GPA percentages");
+            Console.WriteLine("7. Display list students by academic performance");
+            Console.WriteLine("0. Exit");
             Console.Write("Enter your choice: ");
             string choice = Console.ReadLine();
+
+
 
             switch (choice)
             {
                 case "1":
                     CreateNewStudent();
+                    Student.PrintAllStudents();
                     break;
                 case "2":
                     SearchStudentById();
                     break;
                 case "3":
-                    return; // Exit the program
+                    UpdateStudentById();
+                    break;
+                case "4":
+                    DeleteStudentById();
+                    Student.PrintAllStudents();
+                    break;
+                case "5":
+                    Student.DisplayAcademicPerformancePercentage();
+                    break;
+                case "6":
+                    Student.DisplayGpaPercentage();
+                    break;
+                case "7":
+                    DisplayStudentsByPerformance();
+                    break;
+                case "0":
+                    SaveStudentsToFile(Student.students, @"C:\DanhSachSinhVien\students.txt");
+                    Console.WriteLine("Student list saved. Program terminated.");
+                    return;
                 default:
                     Console.WriteLine("Invalid choice. Please try again.");
                     break;
@@ -46,8 +79,134 @@ class Program
 
         // Print success message
         Console.WriteLine("Student added successfully:");
-        Console.WriteLine(newStudent.ToString());
+        // Console.WriteLine(newStudent.ToString());
     }
+
+    static void UpdateStudentById()
+    {
+        Console.Write("Enter the Student ID to update: ");
+        string studentId = Console.ReadLine();
+
+        Student studentToUpdate = null;
+
+        for (int i = 0; i < Student.StudentCount; i++)
+        {
+            if (Student.GetStudentByIndex(i).GetStudentId().Equals(studentId, StringComparison.OrdinalIgnoreCase))
+            {
+                studentToUpdate = Student.GetStudentByIndex(i);
+                break;
+            }
+        }
+
+        if (studentToUpdate == null)
+        {
+            Console.WriteLine("No student found with the given ID.");
+            return;
+        }
+
+        try
+        {
+            string name = InputName();
+            DateTime dateOfBirth = InputDateOfBirth();
+            string address = InputAddress();
+            float height = InputHeight();
+            float weight = InputWeight();
+            string currentSchool = InputCurrentSchool();
+            int yearOfUniversityEntry = InputYearOfUniversityEntry();
+            float gpa = InputGPA();
+
+            // Update student details
+            studentToUpdate.UpdateDetails(name, dateOfBirth, address, height, weight, currentSchool, yearOfUniversityEntry, gpa);
+
+            Console.WriteLine("Student details updated successfully:");
+            Console.WriteLine(studentToUpdate.ToString());
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}. Update failed.");
+        }
+    }
+
+    static void DeleteStudentById()
+    {
+        Console.Write("Enter the Student ID to delete: ");
+        string studentId = Console.ReadLine();
+
+        Student studentToRemove = null;
+
+        // Find the student to remove
+        foreach (var student in Student.students)
+        {
+            if (student.GetStudentId().Equals(studentId, StringComparison.OrdinalIgnoreCase))
+            {
+                studentToRemove = student;
+                break;
+            }
+        }
+
+        if (studentToRemove == null)
+        {
+            Console.WriteLine("No student found with the given ID.");
+            return;
+        }
+
+        // Remove the student
+        Student.students.Remove(studentToRemove);
+
+        // Update IDs of remaining students
+        for (int i = 0; i < Student.StudentCount; i++)
+        {
+            Student.students[i].UpdateId(i + 1);
+        }
+
+        Console.WriteLine("Student deleted and IDs updated successfully.");
+    }
+    static void DisplayStudentsByPerformance()
+    {
+        while (true)
+        {
+            Console.WriteLine("\nEnter the academic performance (Poor, Weak, Average, Good, Excellent, Outstanding): ");
+            string input = Console.ReadLine();
+
+            if (Enum.TryParse(input, true, out AcademicPerformance performance))
+            {
+                Student.DisplayStudentsByPerformance(performance);
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid academic performance.");
+            }
+        }
+    }
+    static void SaveStudentsToFile(List<Student> students, string fileName)
+    {
+        // Ensure the directory exists
+        string directory = Path.GetDirectoryName(fileName);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        using (StreamWriter writer = new StreamWriter(fileName))
+        {
+            foreach (var student in students)
+            {
+                writer.WriteLine($"ID: {student.Id}");
+                writer.WriteLine($"Name: {student.Name}");
+                writer.WriteLine($"Date of Birth: {student.DateOfBirth:yyyy-MM-dd}");
+                writer.WriteLine($"Address: {student.Address}");
+                writer.WriteLine($"Height: {student.Height}");
+                writer.WriteLine($"Weight: {student.Weight}");
+                writer.WriteLine($"Current School: {student.CurrentSchool}");
+                writer.WriteLine($"Year of University Entry: {student.YearOfUniversityEntry}");
+                writer.WriteLine($"GPA: {student.GPA}");
+                writer.WriteLine($"Academic Performance: {student.AcademicPerformance}");
+                writer.WriteLine(new string('-', 20));
+            }
+        }
+    }
+
 
     static string InputName()
     {
@@ -152,31 +311,31 @@ class Program
     }
 
     static string InputStudentId()
-{
-    while (true)
     {
-        try
+        while (true)
         {
-            Console.Write("Student ID: ");
-            string studentId = Console.ReadLine();
-            Validate.StudentId(studentId);
+            try
+            {
+                Console.Write("Student ID: ");
+                string studentId = Console.ReadLine();
+                Validate.StudentId(studentId);
 
-            // Check if the StudentId already exists
-            if (Student.IsStudentIdDuplicate(studentId))
-            {
-                Console.WriteLine("Error: Student ID already exists. Please enter a different Student ID.");
+                // Check if the StudentId already exists
+                if (Student.IsStudentIdDuplicate(studentId))
+                {
+                    Console.WriteLine("Error: Student ID already exists. Please enter a different Student ID.");
+                }
+                else
+                {
+                    return studentId;
+                }
             }
-            else
+            catch (ArgumentException ex)
             {
-                return studentId;
+                Console.WriteLine($"Error: {ex.Message}. Please enter the student ID again.");
             }
-        }
-        catch (ArgumentException ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}. Please enter the student ID again.");
         }
     }
-}
 
 
     static string InputCurrentSchool()
@@ -241,11 +400,11 @@ class Program
         }
     }
 
-     static void SearchStudentById()
+    static void SearchStudentById()
     {
         Console.Write("Enter the Student ID to search: ");
         string studentId = Console.ReadLine();
-        
+
         bool found = false;
         for (int i = 0; i < Student.StudentCount; i++)
         {
