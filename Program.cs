@@ -5,10 +5,10 @@ class Program
     static void Main()
     {
 
-        // new Student("Alice", new DateTime(2001, 1, 1), "Address1", 160, 50, "S001111111", "University A", 2019, 8.5f);
-        // new Student("Bob", new DateTime(2000, 2, 2), "Address2", 170, 60, "S002111111", "University B", 2018, 6.0f);
-        // new Student("Charlie", new DateTime(1999, 3, 3), "Address3", 165, 55, "S003111111", "University C", 2017, 4.0f);
-        // new Student("Charlieee", new DateTime(1998, 3, 3), "Address4", 166, 55, "S003111112", "University C", 2017, 4.0f);
+        new Student("Hung", new DateTime(2001, 1, 1), "Address1", 160, 50, "S001111111", "University A", 2019, 8.5f);
+        new Student("Hoa", new DateTime(2000, 2, 2), "Address2", 170, 60, "S002111111", "University B", 2018, 6.0f);
+        new Student("Bi", new DateTime(1999, 3, 3), "Address3", 165, 55, "S003111111", "University C", 2017, 4.0f);
+        new Student("Luong", new DateTime(1998, 3, 3), "Address4", 166, 55, "S003111112", "University C", 2017, 4.0f);
 
         List<Student> students = new List<Student>();
         while (true)
@@ -80,6 +80,30 @@ class Program
         // Print success message
         Console.WriteLine("Student added successfully:");
         // Console.WriteLine(newStudent.ToString());
+    }
+
+    //read
+    static void SearchStudentById()
+    {
+        Console.Write("Enter the Student ID to search: ");
+        string studentId = Console.ReadLine();
+
+        bool found = false;
+        for (int i = 0; i < Student.StudentCount; i++)
+        {
+            if (Student.GetStudentByIndex(i).GetStudentId().Equals(studentId, StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine("Student found:");
+                Console.WriteLine(Student.GetStudentByIndex(i).ToString());
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            Console.WriteLine("No data found matching the given ID.");
+        }
     }
 
     static void UpdateStudentById()
@@ -397,29 +421,6 @@ class Program
             {
                 Console.WriteLine("Format Error: Please enter a valid number for GPA.");
             }
-        }
-    }
-
-    static void SearchStudentById()
-    {
-        Console.Write("Enter the Student ID to search: ");
-        string studentId = Console.ReadLine();
-
-        bool found = false;
-        for (int i = 0; i < Student.StudentCount; i++)
-        {
-            if (Student.GetStudentByIndex(i).GetStudentId().Equals(studentId, StringComparison.OrdinalIgnoreCase))
-            {
-                Console.WriteLine("Student found:");
-                Console.WriteLine(Student.GetStudentByIndex(i).ToString());
-                found = true;
-                break;
-            }
-        }
-
-        if (!found)
-        {
-            Console.WriteLine("No data found matching the given ID.");
         }
     }
 }
