@@ -26,7 +26,7 @@ public class StudentManage
         Console.WriteLine("Student added successfully:");
         // Console.WriteLine(newStudent.ToString());
     }
-   
+
 
     public static void SearchStudentById()
     {
@@ -115,6 +115,7 @@ public class StudentManage
                         break;
                     case "8":
                         studentToUpdate.GPA = InputGPA();
+                        studentToUpdate.UpdateAcademicPerformance(); 
                         break;
                     case "0":
                         Console.WriteLine("Update finished.");
@@ -269,39 +270,39 @@ public class StudentManage
 
     //save to file
     public static void SaveStudentsToFile(List<Student> students, string fileName)
-{
-    // Get the base directory of the application
-    string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-    // Combine the base directory with the file name
-    string fullPath = Path.Combine(baseDirectory, fileName);
-
-    // Ensure the directory exists (usually the base directory is already created)
-    Directory.CreateDirectory(baseDirectory);
-
-    using (StreamWriter writer = new StreamWriter(fullPath))
     {
-        foreach (var student in students)
+        // Get the base directory of the application
+        string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+        // Combine the base directory with the file name
+        string fullPath = Path.Combine(baseDirectory, fileName);
+
+        // Ensure the directory exists (usually the base directory is already created)
+        Directory.CreateDirectory(baseDirectory);
+
+        using (StreamWriter writer = new StreamWriter(fullPath))
         {
-            writer.WriteLine($"ID: {student.Id}");
-            writer.WriteLine($"Name: {student.Name}");
-            writer.WriteLine($"Date of Birth: {student.DateOfBirth:yyyy-MM-dd}");
-            writer.WriteLine($"Address: {student.Address}");
-            writer.WriteLine($"Height: {student.Height}");
-            writer.WriteLine($"Weight: {student.Weight}");
-            writer.WriteLine($"Current School: {student.CurrentSchool}");
-            writer.WriteLine($"Year of University Entry: {student.YearOfUniversityEntry}");
-            writer.WriteLine($"GPA: {student.GPA}");
-            writer.WriteLine($"Academic Performance: {student.AcademicPerformance}");
-            writer.WriteLine(new string('-', 20));
+            foreach (var student in students)
+            {
+                writer.WriteLine($"ID: {student.Id}");
+                writer.WriteLine($"Name: {student.Name}");
+                writer.WriteLine($"Date of Birth: {student.DateOfBirth:yyyy-MM-dd}");
+                writer.WriteLine($"Address: {student.Address}");
+                writer.WriteLine($"Height: {student.Height}");
+                writer.WriteLine($"Weight: {student.Weight}");
+                writer.WriteLine($"Current School: {student.CurrentSchool}");
+                writer.WriteLine($"Year of University Entry: {student.YearOfUniversityEntry}");
+                writer.WriteLine($"GPA: {student.GPA}");
+                writer.WriteLine($"Academic Performance: {student.AcademicPerformance}");
+                writer.WriteLine(new string('-', 20));
+            }
         }
+
+        Console.WriteLine($"Student list saved to {fullPath}");
     }
 
-    Console.WriteLine($"Student list saved to {fullPath}");
-}
 
 
-    
     // method input
     private static string InputName()
     {

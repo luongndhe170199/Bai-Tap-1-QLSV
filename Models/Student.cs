@@ -54,7 +54,7 @@ public class Student : Person
         return AcademicPerformance.Outstanding;
     }
 
-    private void UpdateAcademicPerformance()
+    public void UpdateAcademicPerformance()
     {
         AcademicPerformance = CalculateAcademicPerformance(GPA);
     }
@@ -62,30 +62,6 @@ public class Student : Person
     public static void AddStudent(Student student)
     {
         students.Add(student);
-    }
-
-    //update
-
-    public void UpdateDetails(string name, DateTime dateOfBirth, string address, float height, float weight, string currentSchool, int yearOfUniversityEntry, float gpa)
-    {
-        Validate.Name(name);
-        Validate.DateOfBirth(dateOfBirth);
-        Validate.Address(address);
-        Validate.Height(height);
-        Validate.Weight(weight);
-        Validate.CurrentSchool(currentSchool);
-        Validate.YearOfUniversityEntry(yearOfUniversityEntry);
-        Validate.GPA(gpa);
-
-        base.Name = name;
-        base.DateOfBirth = dateOfBirth;
-        base.Address = address;
-        base.Height = height;
-        base.Weight = weight;
-        this.CurrentSchool = currentSchool;
-        this.YearOfUniversityEntry = yearOfUniversityEntry;
-        this.GPA = gpa;
-        UpdateAcademicPerformance();
     }
 
     // Method to print all students
@@ -96,7 +72,6 @@ public class Student : Person
             Console.WriteLine(student.ToString());
         }
     }
-
 
     public static bool IsStudentIdDuplicate(string studentId)
     {
