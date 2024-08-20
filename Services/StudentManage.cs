@@ -1,68 +1,13 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-class Program
+public class StudentManage
 {
-    static void Main()
-    {
+    private static List<Student> students = new List<Student>();
 
-        new Student("Hung", new DateTime(2001, 1, 1), "Address1", 160, 50, "S001111111", "University A", 2019, 8.5f);
-        new Student("Hoa", new DateTime(2000, 2, 2), "Address2", 170, 60, "S002111111", "University B", 2018, 6.0f);
-        new Student("Bi", new DateTime(1999, 3, 3), "Address3", 165, 55, "S003111111", "University C", 2017, 4.0f);
-        new Student("Luong", new DateTime(1998, 3, 3), "Address4", 166, 55, "S003111112", "University C", 2017, 4.0f);
-
-        List<Student> students = new List<Student>();
-        while (true)
-        {
-            Console.WriteLine("\nChoose an option:");
-            Console.WriteLine("1. Add a new student");
-            Console.WriteLine("2. Search for a student by ID");
-            Console.WriteLine("3. Update student details by ID");
-            Console.WriteLine("4. Delete student by ID");
-            Console.WriteLine("5. percent of academic performance");
-            Console.WriteLine("6. Display GPA percentages");
-            Console.WriteLine("7. Display list students by academic performance");
-            Console.WriteLine("0. Exit");
-            Console.Write("Enter your choice: ");
-            string choice = Console.ReadLine();
-
-
-
-            switch (choice)
-            {
-                case "1":
-                    CreateNewStudent();
-                    Student.PrintAllStudents();
-                    break;
-                case "2":
-                    SearchStudentById();
-                    break;
-                case "3":
-                    UpdateStudentById();
-                    break;
-                case "4":
-                    DeleteStudentById();
-                    Student.PrintAllStudents();
-                    break;
-                case "5":
-                    Student.DisplayAcademicPerformancePercentage();
-                    break;
-                case "6":
-                    Student.DisplayGpaPercentage();
-                    break;
-                case "7":
-                    DisplayStudentsByPerformance();
-                    break;
-                case "0":
-                    SaveStudentsToFile(Student.students, @"C:\DanhSachSinhVien\students.txt");
-                    Console.WriteLine("Student list saved. Program terminated.");
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
-            }
-        }
-    }
-    static void CreateNewStudent()
+    public static void CreateNewStudent()
     {
         string name = InputName();
         DateTime dateOfBirth = InputDateOfBirth();
@@ -76,14 +21,14 @@ class Program
 
         // Create a new Student object
         Student newStudent = new Student(name, dateOfBirth, address, height, weight, studentId, currentSchool, yearOfUniversityEntry, gpa);
-
+        students.Add(newStudent);
         // Print success message
         Console.WriteLine("Student added successfully:");
         // Console.WriteLine(newStudent.ToString());
     }
+   
 
-    //read
-    static void SearchStudentById()
+    public static void SearchStudentById()
     {
         Console.Write("Enter the Student ID to search: ");
         string studentId = Console.ReadLine();
@@ -106,7 +51,7 @@ class Program
         }
     }
 
-    static void UpdateStudentById()
+    public static void UpdateStudentById()
     {
         Console.Write("Enter the Student ID to update: ");
         string studentId = Console.ReadLine();
@@ -128,30 +73,69 @@ class Program
             return;
         }
 
-        try
+        while (true)
         {
-            string name = InputName();
-            DateTime dateOfBirth = InputDateOfBirth();
-            string address = InputAddress();
-            float height = InputHeight();
-            float weight = InputWeight();
-            string currentSchool = InputCurrentSchool();
-            int yearOfUniversityEntry = InputYearOfUniversityEntry();
-            float gpa = InputGPA();
+            Console.WriteLine("\nSelect the field you want to update:");
+            Console.WriteLine("1. Name");
+            Console.WriteLine("2. Date of Birth");
+            Console.WriteLine("3. Address");
+            Console.WriteLine("4. Height");
+            Console.WriteLine("5. Weight");
+            Console.WriteLine("6. Current School");
+            Console.WriteLine("7. Year of University Entry");
+            Console.WriteLine("8. GPA");
+            Console.WriteLine("0. Exit update");
+            Console.Write("Enter your choice: ");
+            string choice = Console.ReadLine();
 
-            // Update student details
-            studentToUpdate.UpdateDetails(name, dateOfBirth, address, height, weight, currentSchool, yearOfUniversityEntry, gpa);
+            try
+            {
+                switch (choice)
+                {
+                    case "1":
+                        studentToUpdate.Name = InputName();
+                        break;
+                    case "2":
+                        studentToUpdate.DateOfBirth = InputDateOfBirth();
+                        break;
+                    case "3":
+                        studentToUpdate.Address = InputAddress();
+                        break;
+                    case "4":
+                        studentToUpdate.Height = InputHeight();
+                        break;
+                    case "5":
+                        studentToUpdate.Weight = InputWeight();
+                        break;
+                    case "6":
+                        studentToUpdate.CurrentSchool = InputCurrentSchool();
+                        break;
+                    case "7":
+                        studentToUpdate.YearOfUniversityEntry = InputYearOfUniversityEntry();
+                        break;
+                    case "8":
+                        studentToUpdate.GPA = InputGPA();
+                        break;
+                    case "0":
+                        Console.WriteLine("Update finished.");
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
 
-            Console.WriteLine("Student details updated successfully:");
-            Console.WriteLine(studentToUpdate.ToString());
-        }
-        catch (ArgumentException ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}. Update failed.");
+                Console.WriteLine("Student details updated successfully:");
+                Console.WriteLine(studentToUpdate.ToString());
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}. Update failed.");
+            }
         }
     }
 
-    static void DeleteStudentById()
+    //delete
+    public static void DeleteStudentById()
     {
         Console.Write("Enter the Student ID to delete: ");
         string studentId = Console.ReadLine();
@@ -185,7 +169,8 @@ class Program
 
         Console.WriteLine("Student deleted and IDs updated successfully.");
     }
-    static void DisplayStudentsByPerformance()
+
+    public static void DisplayStudentsByPerformance()
     {
         while (true)
         {
@@ -194,7 +179,7 @@ class Program
 
             if (Enum.TryParse(input, true, out AcademicPerformance performance))
             {
-                Student.DisplayStudentsByPerformance(performance);
+                DisplayStudentsByPerformance(performance);
                 break;
             }
             else
@@ -203,36 +188,122 @@ class Program
             }
         }
     }
-    static void SaveStudentsToFile(List<Student> students, string fileName)
+
+    // Method to calculate and display the percentage of students in each academic performance category
+    public static void DisplayAcademicPerformancePercentage()
     {
-        // Ensure the directory exists
-        string directory = Path.GetDirectoryName(fileName);
-        if (!Directory.Exists(directory))
+        if (Student.students.Count == 0)
         {
-            Directory.CreateDirectory(directory);
+            Console.WriteLine("No students in the list.");
+            return;
         }
 
-        using (StreamWriter writer = new StreamWriter(fileName))
-        {
-            foreach (var student in students)
+        // Group students by academic performance and calculate the percentage
+        var performanceGroups = Student.students
+            .GroupBy(student => student.AcademicPerformance)
+            .Select(group => new
             {
-                writer.WriteLine($"ID: {student.Id}");
-                writer.WriteLine($"Name: {student.Name}");
-                writer.WriteLine($"Date of Birth: {student.DateOfBirth:yyyy-MM-dd}");
-                writer.WriteLine($"Address: {student.Address}");
-                writer.WriteLine($"Height: {student.Height}");
-                writer.WriteLine($"Weight: {student.Weight}");
-                writer.WriteLine($"Current School: {student.CurrentSchool}");
-                writer.WriteLine($"Year of University Entry: {student.YearOfUniversityEntry}");
-                writer.WriteLine($"GPA: {student.GPA}");
-                writer.WriteLine($"Academic Performance: {student.AcademicPerformance}");
-                writer.WriteLine(new string('-', 20));
+                Performance = group.Key,
+                Percentage = (double)group.Count() / Student.students.Count * 100
+            })
+            .OrderByDescending(result => result.Percentage)
+            .ToList();
+
+        // Display the results
+        foreach (var group in performanceGroups)
+        {
+            Console.WriteLine($"{group.Performance}: {group.Percentage:F2}%");
+        }
+    }
+
+    // Method to calculate and display the percentage of students based on their GPA scores
+    public static void DisplayGpaPercentage()
+    {
+        if (Student.students.Count == 0)
+        {
+            Console.WriteLine("No students in the list.");
+            return;
+        }
+
+        // Dictionary to store the frequency of each GPA score
+        Dictionary<float, int> gpaCount = new Dictionary<float, int>();
+
+        // Count the frequency of each GPA
+        foreach (var student in Student.students)
+        {
+            if (gpaCount.ContainsKey(student.GPA))
+            {
+                gpaCount[student.GPA]++;
+            }
+            else
+            {
+                gpaCount[student.GPA] = 1;
+            }
+        }
+
+        // Calculate and display the percentage of each GPA
+        foreach (var entry in gpaCount)
+        {
+            float percentage = (float)entry.Value / Student.students.Count * 100;
+            Console.WriteLine($"GPA: {entry.Key}: {percentage:F2}%");
+        }
+    }
+    // Method to display students based on the specified academic performance
+    public static void DisplayStudentsByPerformance(AcademicPerformance performance)
+    {
+        var studentsByPerformance = Student.students.Where(student => student.AcademicPerformance == performance).ToList();
+
+        if (studentsByPerformance.Count == 0)
+        {
+            Console.WriteLine($"No students found with {performance} performance.");
+        }
+        else
+        {
+            Console.WriteLine($"\nStudents with {performance} performance:");
+            foreach (var student in studentsByPerformance)
+            {
+                Console.WriteLine(student.ToString());
             }
         }
     }
 
+    //save to file
+    public static void SaveStudentsToFile(List<Student> students, string fileName)
+{
+    // Get the base directory of the application
+    string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-    static string InputName()
+    // Combine the base directory with the file name
+    string fullPath = Path.Combine(baseDirectory, fileName);
+
+    // Ensure the directory exists (usually the base directory is already created)
+    Directory.CreateDirectory(baseDirectory);
+
+    using (StreamWriter writer = new StreamWriter(fullPath))
+    {
+        foreach (var student in students)
+        {
+            writer.WriteLine($"ID: {student.Id}");
+            writer.WriteLine($"Name: {student.Name}");
+            writer.WriteLine($"Date of Birth: {student.DateOfBirth:yyyy-MM-dd}");
+            writer.WriteLine($"Address: {student.Address}");
+            writer.WriteLine($"Height: {student.Height}");
+            writer.WriteLine($"Weight: {student.Weight}");
+            writer.WriteLine($"Current School: {student.CurrentSchool}");
+            writer.WriteLine($"Year of University Entry: {student.YearOfUniversityEntry}");
+            writer.WriteLine($"GPA: {student.GPA}");
+            writer.WriteLine($"Academic Performance: {student.AcademicPerformance}");
+            writer.WriteLine(new string('-', 20));
+        }
+    }
+
+    Console.WriteLine($"Student list saved to {fullPath}");
+}
+
+
+    
+    // method input
+    private static string InputName()
     {
         while (true)
         {
@@ -250,7 +321,7 @@ class Program
         }
     }
 
-    static DateTime InputDateOfBirth()
+    private static DateTime InputDateOfBirth()
     {
         while (true)
         {
@@ -272,7 +343,7 @@ class Program
         }
     }
 
-    static string InputAddress()
+    private static string InputAddress()
     {
         while (true)
         {
@@ -290,7 +361,7 @@ class Program
         }
     }
 
-    static float InputHeight()
+    private static float InputHeight()
     {
         while (true)
         {
@@ -312,7 +383,7 @@ class Program
         }
     }
 
-    static float InputWeight()
+    private static float InputWeight()
     {
         while (true)
         {
@@ -334,7 +405,7 @@ class Program
         }
     }
 
-    static string InputStudentId()
+    private static string InputStudentId()
     {
         while (true)
         {
@@ -344,7 +415,6 @@ class Program
                 string studentId = Console.ReadLine();
                 Validate.StudentId(studentId);
 
-                // Check if the StudentId already exists
                 if (Student.IsStudentIdDuplicate(studentId))
                 {
                     Console.WriteLine("Error: Student ID already exists. Please enter a different Student ID.");
@@ -361,8 +431,7 @@ class Program
         }
     }
 
-
-    static string InputCurrentSchool()
+    private static string InputCurrentSchool()
     {
         while (true)
         {
@@ -380,16 +449,16 @@ class Program
         }
     }
 
-    static int InputYearOfUniversityEntry()
+    private static int InputYearOfUniversityEntry()
     {
         while (true)
         {
             try
             {
                 Console.Write("Year of University Entry: ");
-                int yearOfUniversityEntry = int.Parse(Console.ReadLine());
-                Validate.YearOfUniversityEntry(yearOfUniversityEntry);
-                return yearOfUniversityEntry;
+                int yearOfEntry = int.Parse(Console.ReadLine());
+                Validate.YearOfUniversityEntry(yearOfEntry);
+                return yearOfEntry;
             }
             catch (ArgumentException ex)
             {
@@ -397,12 +466,12 @@ class Program
             }
             catch (FormatException)
             {
-                Console.WriteLine("Format Error: Please enter a valid number for the year of university entry.");
+                Console.WriteLine("Format Error: Please enter a valid year.");
             }
         }
     }
 
-    static float InputGPA()
+    private static float InputGPA()
     {
         while (true)
         {

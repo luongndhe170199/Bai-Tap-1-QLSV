@@ -14,11 +14,7 @@ public class Person
     // Constructor for the Person class
     public Person(string name, DateTime dateOfBirth, string address, float height, float weight)
     {
-        Validate.Name(name);
-        Validate.DateOfBirth(dateOfBirth);
-        Validate.Address(address);
-        Validate.Height(height);
-        Validate.Weight(weight);
+       
 
         Id = ++_lastId;
         Name = name;
