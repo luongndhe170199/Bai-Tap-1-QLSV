@@ -45,9 +45,15 @@ public static class Validate
 
     public static void YearOfUniversityEntry(int yearOfUniversityEntry)
     {
+        int currentYear = DateTime.Now.Year;
+
         if (yearOfUniversityEntry <= Constants.MinYearOfUniversityEntry)
             throw new ArgumentException($"Year of university entry must be after {Constants.MinYearOfUniversityEntry}.");
+
+        if (yearOfUniversityEntry > currentYear)
+            throw new ArgumentException($"Year of university entry cannot be in the future. Please enter a year no later than {currentYear}.");
     }
+
 
     public static void GPA(float gpa)
     {

@@ -1,0 +1,44 @@
+ID: 1
+Name: Hung
+Date of Birth: 2001-01-01
+Address: Address1
+Height: 160
+Weight: 50
+Current School: University A
+Year of University Entry: 2019
+GPA: 8.5
+Academic Performance: Excellent
+--------------------
+ID: 2
+Name: Bi
+Date of Birth: 1999-03-03
+Address: Address3
+Height: 165
+Weight: 55
+Current School: University C
+Year of University Entry: 2017
+GPA: 4
+Academic Performance: Weak
+--------------------
+ID: 3
+Name: Luong
+Date of Birth: 1998-03-03
+Address: Address4
+Height: 166
+Weight: 55
+Current School: University C
+Year of University Entry: 2017
+GPA: 4
+Academic Performance: Weak
+--------------------
+ID: 4
+Name: luongdz
+Date of Birth: 2003-11-20
+Address: oceoce
+Height: 80
+Weight: 80
+Current School: fpt
+Year of University Entry: 2023
+GPA: 8
+Academic Performance: Excellent
+--------------------

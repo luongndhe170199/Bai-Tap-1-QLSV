@@ -22,9 +22,15 @@ public class StudentManage
         // Create a new Student object
         Student newStudent = new Student(name, dateOfBirth, address, height, weight, studentId, currentSchool, yearOfUniversityEntry, gpa);
         students.Add(newStudent);
+        // save to file
+        SaveStudentsToFile(Student.students, "students.txt");
         // Print success message
         Console.WriteLine("Student added successfully:");
         // Console.WriteLine(newStudent.ToString());
+    }
+    public static Student FindStudentById(string studentId)
+    {
+        return Student.students.FirstOrDefault(s => s.GetStudentId().Equals(studentId, StringComparison.OrdinalIgnoreCase));
     }
 
 
@@ -33,39 +39,26 @@ public class StudentManage
         Console.Write("Enter the Student ID to search: ");
         string studentId = Console.ReadLine();
 
-        bool found = false;
-        for (int i = 0; i < Student.StudentCount; i++)
-        {
-            if (Student.GetStudentByIndex(i).GetStudentId().Equals(studentId, StringComparison.OrdinalIgnoreCase))
-            {
-                Console.WriteLine("Student found:");
-                Console.WriteLine(Student.GetStudentByIndex(i).ToString());
-                found = true;
-                break;
-            }
-        }
+        Student student = FindStudentById(studentId);
 
-        if (!found)
+        if (student != null)
+        {
+            Console.WriteLine("Student found:");
+            Console.WriteLine(student.ToString());
+        }
+        else
         {
             Console.WriteLine("No data found matching the given ID.");
         }
     }
+
 
     public static void UpdateStudentById()
     {
         Console.Write("Enter the Student ID to update: ");
         string studentId = Console.ReadLine();
 
-        Student studentToUpdate = null;
-
-        for (int i = 0; i < Student.StudentCount; i++)
-        {
-            if (Student.GetStudentByIndex(i).GetStudentId().Equals(studentId, StringComparison.OrdinalIgnoreCase))
-            {
-                studentToUpdate = Student.GetStudentByIndex(i);
-                break;
-            }
-        }
+        Student studentToUpdate = FindStudentById(studentId);
 
         if (studentToUpdate == null)
         {
@@ -115,7 +108,7 @@ public class StudentManage
                         break;
                     case "8":
                         studentToUpdate.GPA = InputGPA();
-                        studentToUpdate.UpdateAcademicPerformance(); 
+                        studentToUpdate.UpdateAcademicPerformance();
                         break;
                     case "0":
                         Console.WriteLine("Update finished.");
@@ -135,23 +128,14 @@ public class StudentManage
         }
     }
 
+
     //delete
     public static void DeleteStudentById()
     {
         Console.Write("Enter the Student ID to delete: ");
         string studentId = Console.ReadLine();
 
-        Student studentToRemove = null;
-
-        // Find the student to remove
-        foreach (var student in Student.students)
-        {
-            if (student.GetStudentId().Equals(studentId, StringComparison.OrdinalIgnoreCase))
-            {
-                studentToRemove = student;
-                break;
-            }
-        }
+        Student studentToRemove = FindStudentById(studentId);
 
         if (studentToRemove == null)
         {
@@ -170,6 +154,7 @@ public class StudentManage
 
         Console.WriteLine("Student deleted and IDs updated successfully.");
     }
+
 
     public static void DisplayStudentsByPerformance()
     {

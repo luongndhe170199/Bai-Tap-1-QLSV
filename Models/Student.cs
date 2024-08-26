@@ -40,19 +40,23 @@ public class Student : Person
     }
     private AcademicPerformance CalculateAcademicPerformance(float gpa)
     {
-        if (gpa < 3.0f)
-            return AcademicPerformance.Poor;
-        if (gpa >= 3.0f && gpa < 5.0f)
-            return AcademicPerformance.Weak;
-        if (gpa >= 5.0f && gpa < 6.5f)
-            return AcademicPerformance.Average;
-        if (gpa >= 6.5f && gpa < 7.5f)
-            return AcademicPerformance.Good;
-        if (gpa >= 7.5f && gpa < 9.0f)
-            return AcademicPerformance.Excellent;
-
-        return AcademicPerformance.Outstanding;
+        switch (gpa)
+        {
+            case < 3.0f:
+                return AcademicPerformance.Poor;
+            case >= 3.0f and < 5.0f:
+                return AcademicPerformance.Weak;
+            case >= 5.0f and < 6.5f:
+                return AcademicPerformance.Average;
+            case >= 6.5f and < 7.5f:
+                return AcademicPerformance.Good;
+            case >= 7.5f and < 9.0f:
+                return AcademicPerformance.Excellent;
+            default:
+                return AcademicPerformance.Outstanding;
+        }
     }
+
 
     public void UpdateAcademicPerformance()
     {
